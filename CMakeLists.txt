@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
+
+project(CPPHPC LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(MoveSem ${CMAKE_CURRENT_SOURCE_DIR}/Essentials/MoveSemantics.cpp)
