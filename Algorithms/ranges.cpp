@@ -77,7 +77,32 @@ void finding_elems()
 	}
 }
 
-void binary_search()
+void binsrch()
 {
-	
+	std::vector<int> v = { 2,2,3,3,3,4,5 };
+	bool found = std::ranges::binary_search(v, 3);
+	std::cout << std::boolalpha << found << '\n'; //output true
+
+	assert(std::ranges::is_sorted(v));
 }
+
+void bounds()
+{
+	std::vector<int> v = { 2,2,3,3,3,4,5 };
+
+	//Note: I wonder if performance differs between these (probably not)
+	std::vector<int>::iterator it = std::ranges::lower_bound(v, 3);
+	if (it != v.end())
+	{
+		int idx = std::distance(v.begin(), it);
+		std::cout << "Low bound Index: " << idx << '\n';
+	}
+
+	std::vector<int>::iterator it2 = std::ranges::upper_bound(v, 3);
+	if (it2 != v.end())
+	{
+		int idx = std::distance(v.begin(), it2);
+		std::cout << "Upper bound Index: " << idx << '\n';
+	}
+}
+
