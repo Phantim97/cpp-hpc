@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <range>
 #include <vector>
 
 void varying_sorts()
@@ -106,3 +107,93 @@ void bounds()
 	}
 }
 
+//Bound Testing
+void bound_test()
+{
+	std::vector<int> v = { 3,2,2,1,0,2,1 };
+	const auto is_negative = [](int i) { return i < 0; };
+
+	if (std::ranges::none_of(v, is_negative))
+	{
+		std::cout << "Only contains natural numbers\n";
+	}
+
+	if (std::ranges::all_of(v, is_negative))
+	{
+		std::cout << "Only contains negative numbers\n";
+	}
+
+	if (std::ranges::any_of(v, is_negative))
+	{
+		std::cout << "Contains at least one negative number\n";
+	}
+}
+
+//Counting Elements:
+void get_how_many_are_eq()
+{
+	std::list<int> numbers = { 3, 3, 2, 1, 3, 1, 3 };
+	int n = std::ranges::count(numbers, 3);
+	std::cout << n << '\n'; //prints 4
+
+	const std::vector<int> v = { 0, 2, 2, 3, 3, 4, 5 };
+	assert(std::ranges::is_sorted(v)); //O(n), but not called in release
+	auto r = std::ranges::equal_range(v, 3);
+	int n2 = std::ranges::size(r);
+	std::cout << n2 << '\n'; //Prints: 2
+}
+
+
+//Minimum, Maximum, Clamping
+int some_func()
+{
+	return 10;
+}
+
+void min_max_clamp()
+{
+	constexpr int y_max = 100;
+	constexpr int y_min = 0;
+
+	int y = some_func();
+
+	if (y > y_max)
+	{
+		y = y_max;
+	}
+
+	//or
+
+	const int y_val = std::min(some_func(), y_max);
+
+	//Can also do
+	const int y_val2 = std::max(std::min(some_func(), y_max), y_min);
+
+	//Simplified with clamping
+	const int y_val3 = std::clamp(some_func(), y_min, y_max);
+}
+
+void find_extrema()
+{
+	const std::vector<int> v = { 4,2,1,7,3,1,5 };
+	const auto [min, max] = std::ranges::minmax(v);
+	std::cout << min << " " << max << '\n';
+
+	//Can also do (note max_element is valid too):
+	const auto it = std::ranges::min_element(v);
+	std::cout << std::distance(v.begin(), it); //Output: 2 (index of minimum element)
+}
+
+//Any type that exposes these is considered a range (given that these funcs return iterators)
+template <typename T>
+std::concept range = std::requires(T& t)
+{
+	ranges::begin(t);
+	ranges::end(t);
+}
+
+void pass_range_to_constrained_algo()
+{
+	std::vector<int> vec = { 1,1,0,,1,1,0,0,1 };
+	std::cout << std::ranges::count(vec, 0); //Prints: 3
+}
