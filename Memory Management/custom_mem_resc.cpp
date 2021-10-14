@@ -20,7 +20,7 @@ private:
 
 	bool do_is_equal(const std::pmr::memory_resource& other) const noexcept override
 	{
-		return (*this == other);
+		return (this == other);
 	}
 public:
 	PrintingResource()
