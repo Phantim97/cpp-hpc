@@ -61,7 +61,7 @@ int main()
 		tcp::endpoint endpoint{ tcp::v4(), 37259 };
 		asio::awaitable<void> awaitable = listen(endpoint);
 		return awaitable;
-	}
+	};
 
 	asio::io_context ctx;
 	asio::co_spawn(ctx, server, asio::detached);
