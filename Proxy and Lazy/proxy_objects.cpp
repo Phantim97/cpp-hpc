@@ -42,7 +42,7 @@ auto operator+(const String& a, const String& b)
 	return ConcatProxy{ a.str_, b.str_ };
 }
 
-auto operator==(ConcatProxy&& concat, const String& str)
+auto operator==(ConcatProxy&& concat, String& str)
 {
 	return is_concat_equal(concat.a, concat.b, str.str_);
 }
